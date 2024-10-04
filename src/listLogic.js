@@ -1,4 +1,6 @@
 //Let's start by creating a working todolist I can use within my javascript environment
+import { parse } from "date-fns";
+
 
 class ToDoEntry {
     // A shared toDoArray
@@ -8,7 +10,7 @@ class ToDoEntry {
     constructor(title, dueDate, priority, project = null, description = "") {
         this.title = title;
         this.description = description;
-        this.dueDate = new Date(dueDate, 'yyyy-MM-dd');
+        this.dueDate = parse(dueDate, 'yyyy-MM-dd', new Date()); // Date input format: "yyyy-MM-dd"
         this.priority = priority;
         this.project = project;
         this.status = false;
@@ -83,6 +85,6 @@ const todo6 = new ToDoEntry("Fuck boss", '2024-10-05', "High", "Work");
 
 todo6.editEntry({project: "Flyhigh"})
 
-console.log(ToDoEntry.projects)
+console.log(todo6)
 
 export { ToDoEntry };
