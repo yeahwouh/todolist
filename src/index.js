@@ -4,5 +4,18 @@
 import "./styles.css"
 import { ToDoEntry } from "./listLogic"
 
-
-let myEntry2 = new ToDoEntry("washing my car", new Date(2024, 12, 4), 6);
+// let body = document.querySelector("body")
+// let header = document.createElement("div");
+// header.classList.add("header")
+//
+// let projectList = document.createElement("ul");
+// projectList.classList.add("projects");
+//
+// for (item in ToDoEntry.projects) {
+//     let entry = document.createElement("li");
+//     entry.textContent = "item";
+//     projectList.appendChild(entry);
+// }
+//
+// header.appendChild(projectList)
+// body.appendChild(header);
