@@ -1,5 +1,3 @@
-// listLogic.js
-
 //Let's start by creating a working todolist I can use within my javascript environment
 
 import { format, compareAsc} from "date-fns";
@@ -7,13 +5,23 @@ import { format, compareAsc} from "date-fns";
 class ToDoEntry {
     // A shared toDoArray
     static toDos = [];
-    constructor(title, dueDate, priority, project = null, description = "",) {
+    static projects = {};
+
+    constructor(title, dueDate, priority, project = null, description = "") {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate; // (Year, Month, Date)
         this.priority = priority;
         this.project = project;
         this.status = false;
+
+        // Check if the object already exists
+        try {
+            ToDoEntry.projects[project].push(this);
+        } catch(err) { // If not create a new one
+            ToDoEntry.projects[project] = [this];
+        }
+
 
         ToDoEntry.toDos.push(this); // Append the current entry to the shared toDos array
     }
@@ -44,9 +52,13 @@ class ToDoEntry {
             ToDoEntry.toDos.splice(thisIndex, 1, this);
     }
 }
-let myEntry1 = new ToDoEntry("Cleaning the house", new Date(2026, 12, 4), 5);
+let myEntry1 = new ToDoEntry(
+    "Cleaning the house",
+    new Date(2026, 12, 4),
+    5,
+    "Löwenzahn");
+
 console.log(myEntry1)
+console.log(ToDoEntry.projects)
 
 export { ToDoEntry };
-
-// Currently trying to implement date-fns...
