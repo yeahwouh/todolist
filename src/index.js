@@ -12,20 +12,35 @@ function ScreenController() {
     const list = document.querySelector(".list");
 
     const updateScreen = (project = null) => {
+
         // Updating the projects bar
+        projectsBar.textContent = "" // Emptying it so it doesn't append but replace the Projects
         for (let projectTitle in projects) {
             let listElement = document.createElement("li");
-            listElement.textContent = projectTitle;
+
+            // Creating a button to switch between projects views
+            let projectButton = document.createElement("button");
+            projectButton.project = projectTitle;
+            projectButton.textContent = projectTitle;
+            listElement.appendChild(projectButton);
             projectsBar.appendChild(listElement);
         }
 
         // Updating current ToDoList
+        list.textContent = "" // Emptying the content so it doesn't append but replace the current ToDos
         let toDos = projects[project];
         toDos.forEach((entry)=> {
             let listElement = document.createElement("li");
             listElement.textContent = entry.title;
             list.appendChild(listElement);
         })
+
+        // Adding handler for the button
+        function clickHandlerProjects(e) {
+            const selectedProject = e.target.project;
+            updateScreen(selectedProject);
+        }
+        projectsBar.addEventListener("click", clickHandlerProjects);
     }
 
     // Initial update

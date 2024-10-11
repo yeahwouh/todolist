@@ -83,7 +83,7 @@ const todo5 = new ToDoEntry("Plan vacation", "2024-12-01", "Medium", "Travel", )
 
 const todo6 = new ToDoEntry("Fuck boss", '2024-10-05', "High", "Work");
 
-todo6.editEntry({project: "Flyhigh"})
+todo.editEntry({project: "Work"})
 
 console.log(todo6.ti)
 

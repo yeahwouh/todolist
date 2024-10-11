@@ -35,6 +35,16 @@ body {
     margin: 0 15px;
 }
 
+.projects li button {
+    background-color: transparent;
+    color: white;
+    padding: 0;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+
 .content-box {
     background-color: #D6E2C6;
     width: 800px;
