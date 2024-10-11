@@ -24,6 +24,7 @@ function ScreenController() {
             projectButton.textContent = projectTitle;
             listElement.appendChild(projectButton);
             projectsBar.appendChild(listElement);
+            projectButton.addEventListener("click", clickHandlerProjects);
         }
 
         // Updating current ToDoList
@@ -39,12 +40,14 @@ function ScreenController() {
         function clickHandlerProjects(e) {
             const selectedProject = e.target.project;
             updateScreen(selectedProject);
+            console.log("HI")
         }
-        projectsBar.addEventListener("click", clickHandlerProjects);
     }
 
-    // Initial update
+    // Initial render
     updateScreen();
+
+
 }
 
 ScreenController();
