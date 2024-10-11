@@ -85,6 +85,6 @@ const todo6 = new ToDoEntry("Fuck boss", '2024-10-05', "High", "Work");
 
 todo6.editEntry({project: "Flyhigh"})
 
-console.log(todo6)
+console.log(todo6.ti)
 
 export { ToDoEntry };
