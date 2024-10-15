@@ -119,7 +119,15 @@ function ScreenController() {
         let toDos = projects[project];
         toDos.forEach((entry) => {
             let listElement = document.createElement("li");
-            listElement.textContent = entry.title;
+
+            let titleParagraph = document.createElement("p");
+            titleParagraph.textContent = entry.title;
+            let dateParagraph = document.createElement("p");
+            dateParagraph.textContent = `${entry.dueDate.getDate()}-${entry.dueDate.getMonth() + 1}-${entry.dueDate.getFullYear()}`;
+
+
+            listElement.appendChild(titleParagraph);
+            listElement.appendChild(dateParagraph);
             list.appendChild(listElement);
         });
 
@@ -140,4 +148,3 @@ function ScreenController() {
     };
 }
 ScreenController();
-
