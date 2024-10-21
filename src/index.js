@@ -11,27 +11,27 @@ function ScreenController() {
     const content = document.querySelector(".content-box");
     const list = document.querySelector(".list");
 
-    // Create the modal HTML structure and append it to the body
-    const modal = document.createElement("div");
-    modal.classList.add("modal");
-    document.body.appendChild(modal);
-
-    const modalContent = document.createElement("div");
-    modalContent.classList.add("modal-content");
-    modal.appendChild(modalContent);
-
-    // Close button for the modal
-    const closeButton = document.createElement("button");
-    closeButton.classList.add("close-button");
-    closeButton.textContent = "X";
-    modalContent.appendChild(closeButton);
-
-    closeButton.addEventListener("click", () => {
-        modal.style.display = "none"; // Hide the modal when the close button is clicked
-    });
 
     // Function to handle the creation of a new ToDo
     const createNewToDo = () => {
+        // Create the modal HTML structure and append it to the body
+        const modal = document.createElement("div");
+        modal.classList.add("modal");
+        document.body.appendChild(modal);
+
+        const modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content");
+        modal.appendChild(modalContent);
+
+        // Close button for the modal
+        const closeButton = document.createElement("button");
+        closeButton.classList.add("close-button");
+        closeButton.textContent = "X";
+        modalContent.appendChild(closeButton);
+
+        closeButton.addEventListener("click", () => {
+            modal.style.display = "none"; // Hide the modal when the close button is clicked
+        });
         // Clearing the modal content (in case it's already open)
         modalContent.innerHTML = "";
         modalContent.appendChild(closeButton);
