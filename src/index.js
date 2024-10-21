@@ -48,7 +48,16 @@ function ScreenController() {
 
             const dueDateInput = document.createElement("input");
             dueDateInput.type = "date";
-            dueDateInput.value = existingEntry ? existingEntry.dueDate : null;
+
+            let dateObject = existingEntry.dueDate;
+            // Parse the date of an existing entry (if there is one) in a form that can exhibited by a date input box
+            const year = dateObject.getFullYear();
+            const month = String(dateObject.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based, so we add 1
+            const day = String(dateObject.getDate()).padStart(2, '0');
+
+            // Format the date as "yyyy-mm-dd"
+            const dateString = `${year}-${month}-${day}`;
+            dueDateInput.value = existingEntry ? dateString : null;
 
             // dueDateInput.setAttribute('required', true);
             form.appendChild(dueDateInput);
