@@ -5,7 +5,6 @@ import "./styles.css"
 import { ToDoEntry } from "./listLogic"
 
 function ScreenController() {
-    let projects = ToDoEntry.projects;
     const projectsBar = document.querySelector(".projects");
     const list = document.querySelector(".list");
 
@@ -49,15 +48,17 @@ function ScreenController() {
             const dueDateInput = document.createElement("input");
             dueDateInput.type = "date";
 
-            let dateObject = existingEntry.dueDate;
-            // Parse the date of an existing entry (if there is one) in a form that can exhibited by a date input box
-            const year = dateObject.getFullYear();
-            const month = String(dateObject.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based, so we add 1
-            const day = String(dateObject.getDate()).padStart(2, '0');
+            if (existingEntry) {
+                let dateObject = existingEntry.dueDate;
+                // Parse the date of an existing entry (if there is one) in a form that can exhibited by a date input box
+                const year = dateObject.getFullYear();
+                const month = String(dateObject.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based, so we add 1
+                const day = String(dateObject.getDate()).padStart(2, '0');
 
-            // Format the date as "yyyy-mm-dd"
-            const dateString = `${year}-${month}-${day}`;
-            dueDateInput.value = existingEntry ? dateString : null;
+                // Format the date as "yyyy-mm-dd"
+                const dateString = `${year}-${month}-${day}`;
+                dueDateInput.value = existingEntry ? dateString : null;
+            }
 
             // dueDateInput.setAttribute('required', true);
             form.appendChild(dueDateInput);
@@ -106,7 +107,6 @@ function ScreenController() {
                     updateScreen(newProject); // Update the screen after adding the new ToDo
                 } else if (existingEntry !== null) {
                     let index = ToDoEntry.toDos.indexOf(existingEntry);
-                    console.log(newDueDate)
                     // Grabing the entry in the list itself in order to change it
                     ToDoEntry.toDos[index].editEntry({
                         title: newTitle,
@@ -128,18 +128,25 @@ function ScreenController() {
     };
 
     const updateScreen = (project = null) => {
+        let projects = ToDoEntry.projects;
         // Updating the projects bar
         projectsBar.textContent = ""; // Emptying it so it doesn't append but replace the Projects
         for (let projectTitle in projects) {
-            let listElement = document.createElement("li");
+            // Checking for this project to be empty (not containing any tasks)
+            if (projects[projectTitle].length !== 0) {
+                let listElement = document.createElement("li");
+                // Creating a button to switch between projects views
+                let projectButton = document.createElement("button");
+                projectButton.project = projectTitle;
+                projectButton.textContent = projectTitle;
+                listElement.appendChild(projectButton);
+                projectsBar.appendChild(listElement);
+                projectButton.addEventListener("click", clickHandlerProjects);
+            } else {
+                // Deleting from the actual object
+                delete ToDoEntry.projects[projectTitle];
+            }
 
-            // Creating a button to switch between projects views
-            let projectButton = document.createElement("button");
-            projectButton.project = projectTitle;
-            projectButton.textContent = projectTitle;
-            listElement.appendChild(projectButton);
-            projectsBar.appendChild(listElement);
-            projectButton.addEventListener("click", clickHandlerProjects);
         }
         // Adding handler for the button
         function clickHandlerProjects(e) {
