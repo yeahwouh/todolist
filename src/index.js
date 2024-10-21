@@ -118,17 +118,34 @@ function ScreenController() {
         list.textContent = ""; // Emptying the content so it doesn't append but replace the current ToDos
         let toDos = projects[project];
         toDos.forEach((entry) => {
+
+            // Creating the first box so we can place the checkbox and the edit button next to it
+            let entryContent = document.createElement("div");
             let listElement = document.createElement("li");
 
             let titleParagraph = document.createElement("p");
             titleParagraph.textContent = entry.title;
+            titleParagraph.classList.add("bold");
             let dateParagraph = document.createElement("p");
             dateParagraph.textContent = `${entry.dueDate.getDate()}-${entry.dueDate.getMonth() + 1}-${entry.dueDate.getFullYear()}`;
 
 
             listElement.appendChild(titleParagraph);
             listElement.appendChild(dateParagraph);
-            list.appendChild(listElement);
+
+            // Only appending description if there is one
+            if (entry.description !== "") {
+                let descriptionParagraph =  document.createElement("p");
+                descriptionParagraph.textContent = entry.description;
+                listElement.appendChild(descriptionParagraph);
+            }
+            entryContent.appendChild(listElement);
+            list.appendChild(entryContent);
+
+            // The div with the boxes
+            let boxes = document.createElement("div");
+
+
         });
 
         // Adding handler for the button

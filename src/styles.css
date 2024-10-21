@@ -104,7 +104,6 @@ ul li {
    user-select: none;
    -webkit-user-select: none;
    touch-action: manipulation;
-   width: 100%;
    will-change: transform;
 }
 
@@ -153,12 +152,14 @@ transform: translateY(0);
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: red;
+    background-color: #AFC195;
     color: white;
     border: none;
     padding: 5px;
     border-radius: 50%;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
 }
 
 /* Form styling */
@@ -176,7 +177,7 @@ transform: translateY(0);
 .new-todo-form button {
     width: 100%;
     padding: 10px;
-    background-color: green;
+    background-color: #AFC195;
     color: white;
     border: none;
     border-radius: 5px;
@@ -185,4 +186,8 @@ transform: translateY(0);
 
 .new-todo-form button:hover {
     background-color: darkgreen;
+}
+
+.bold {
+    font-weight: bold;
 }
