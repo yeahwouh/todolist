@@ -97,6 +97,7 @@ function ScreenController() {
                     updateScreen(newProject); // Update the screen after adding the new ToDo
                 } else if (existingEntry !== null) {
                     let index = ToDoEntry.toDos.indexOf(existingEntry);
+                    console.log(newDueDate)
                     // Grabing the entry in the list itself in order to change it
                     ToDoEntry.toDos[index].editEntry({
                         title: newTitle,

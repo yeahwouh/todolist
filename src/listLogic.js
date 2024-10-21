@@ -52,7 +52,8 @@ class ToDoEntry {
             this.title = title;
             this.description = description;
 
-            dueDate = this.dueDate;
+            this.dueDate = new Date (dueDate);
+            this.dueDate.setMonth(this.dueDate.getMonth()+1)
 
             this.priority = priority;
 
