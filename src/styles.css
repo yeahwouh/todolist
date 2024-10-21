@@ -121,8 +121,18 @@ box-shadow: none;
 transform: translateY(0);
 }
 
+.content-box .list {
+    height: 400px;
+    overflow: auto;
+}
+
+.entryListElement {
+    display: flex;
+    justify-content: center;
+}
+
 .contentButton {
-    width: 100%;
+    width: 70%;
     height: 100%;
     background: none; /* Remove default background */
     border: none;     /* Remove border */
@@ -133,6 +143,11 @@ transform: translateY(0);
     /* You can style it further to not resemble a button */
     display: block;
     text-align: center; /* Align the text */
+    border-radius: 10px;
+}
+
+.contentButton:hover {
+    background-color: #9CBE6A;
 }
 
 /* styles.css */

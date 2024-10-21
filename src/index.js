@@ -121,9 +121,10 @@ function ScreenController() {
         let toDos = projects[project];
         toDos.forEach((entry) => {
 
-            // Creating the first box so we can place the checkbox and the edit button next to it
             let listElement = document.createElement("li");
+            listElement.classList.add("entryListElement")
 
+            // Make a button to display the entry so we can edit and delete them with a cleaner look
             let contentButton = document.createElement("button");
             contentButton.classList.add("contentButton")
 
