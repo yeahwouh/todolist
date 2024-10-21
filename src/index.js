@@ -43,10 +43,12 @@ function ScreenController() {
         const titleInput = document.createElement("input");
         titleInput.type = "text";
         titleInput.placeholder = "Title";
+        titleInput.setAttribute('required', true);
         form.appendChild(titleInput);
 
         const dueDateInput = document.createElement("input");
         dueDateInput.type = "date";
+        dueDateInput.setAttribute('required', true);
         form.appendChild(dueDateInput);
 
         const priorityInput = document.createElement("select");
