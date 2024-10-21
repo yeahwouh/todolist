@@ -11,6 +11,10 @@ class ToDoEntry {
         this.title = title;
         this.description = description;
         this.dueDate = parse(dueDate, 'yyyy-MM-dd', new Date()); // Date input format: "yyyy-MM-dd"
+
+        // Fixing parsing error
+        this.dueDate.setMonth(this.dueDate.getMonth()+1)
+
         this.priority = priority;
         this.project = project;
         this.status = false;
@@ -47,7 +51,9 @@ class ToDoEntry {
 
             this.title = title;
             this.description = description;
-            this.dueDate = dueDate;
+
+            dueDate = this.dueDate;
+
             this.priority = priority;
 
             // Change in ToDoEntry.projects
@@ -84,7 +90,5 @@ const todo5 = new ToDoEntry("Plan vacation", "2024-12-01", "Medium", "Travel", )
 const todo6 = new ToDoEntry("Fuck boss", '2024-10-05', "High", "Work");
 
 todo.editEntry({project: "Work"})
-
-console.log(todo6.ti)
 
 export { ToDoEntry };

@@ -5,100 +5,116 @@ import "./styles.css"
 import { ToDoEntry } from "./listLogic"
 
 function ScreenController() {
-    let toDos = ToDoEntry.toDos;
     let projects = ToDoEntry.projects;
     const projectsBar = document.querySelector(".projects");
-    const content = document.querySelector(".content-box");
     const list = document.querySelector(".list");
 
 
     // Function to handle the creation of a new ToDo
-    const createNewToDo = () => {
-        // Create the modal HTML structure and append it to the body
-        const modal = document.createElement("div");
-        modal.classList.add("modal");
-        document.body.appendChild(modal);
+    const createOrEditToDo = (existingEntry = null) => {
+            // Create the modal HTML structure and append it to the body
+            const modal = document.createElement("div");
+            modal.classList.add("modal");
+            document.body.appendChild(modal);
 
-        const modalContent = document.createElement("div");
-        modalContent.classList.add("modal-content");
-        modal.appendChild(modalContent);
+            const modalContent = document.createElement("div");
+            modalContent.classList.add("modal-content");
+            modal.appendChild(modalContent);
 
-        // Close button for the modal
-        const closeButton = document.createElement("button");
-        closeButton.classList.add("close-button");
-        closeButton.textContent = "X";
-        modalContent.appendChild(closeButton);
+            // Close button for the modal
+            const closeButton = document.createElement("button");
+            closeButton.classList.add("close-button");
+            closeButton.textContent = "X";
+            modalContent.appendChild(closeButton);
 
-        closeButton.addEventListener("click", () => {
-            modal.style.display = "none"; // Hide the modal when the close button is clicked
-        });
-        // Clearing the modal content (in case it's already open)
-        modalContent.innerHTML = "";
-        modalContent.appendChild(closeButton);
+            closeButton.addEventListener("click", () => {
+                modal.style.display = "none"; // Hide the modal when the close button is clicked
+            });
+            // Clearing the modal content (in case it's already open)
+            modalContent.innerHTML = "";
+            modalContent.appendChild(closeButton);
 
-        // Form elements
-        const form = document.createElement("form");
-        form.classList.add("new-todo-form");
+            // Form elements
+            const form = document.createElement("form");
+            form.classList.add("new-todo-form");
 
-        const titleInput = document.createElement("input");
-        titleInput.type = "text";
-        titleInput.placeholder = "Title";
-        titleInput.setAttribute('required', true);
-        form.appendChild(titleInput);
+            const titleInput = document.createElement("input");
+            titleInput.type = "text";
 
-        const dueDateInput = document.createElement("input");
-        dueDateInput.type = "date";
-        dueDateInput.setAttribute('required', true);
-        form.appendChild(dueDateInput);
+            titleInput.placeholder = existingEntry ? existingEntry.title : "Title";
+            titleInput.value = existingEntry ? existingEntry.title : null;
+            titleInput.setAttribute('required', true);
+            form.appendChild(titleInput);
 
-        const priorityInput = document.createElement("select");
-        ["Low", "Medium", "High"].forEach((priority) => {
-            const option = document.createElement("option");
-            option.value = priority;
-            option.textContent = priority;
-            priorityInput.appendChild(option);
-        });
-        form.appendChild(priorityInput);
+            const dueDateInput = document.createElement("input");
+            dueDateInput.type = "date";
+            dueDateInput.value = existingEntry ? existingEntry.dueDate : null;
 
-        const projectInput = document.createElement("input");
-        projectInput.type = "text";
-        projectInput.placeholder = "Project (Optional)";
-        form.appendChild(projectInput);
+            // dueDateInput.setAttribute('required', true);
+            form.appendChild(dueDateInput);
 
-        const descriptionInput = document.createElement("textarea");
-        descriptionInput.placeholder = "Description (Optional)";
-        form.appendChild(descriptionInput);
+            const priorityInput = document.createElement("select");
+            ["Low", "Medium", "High"].forEach((priority) => {
+                const option = document.createElement("option");
+                option.value = priority;
+                option.textContent = priority;
+                priorityInput.appendChild(option);
+            });
+            priorityInput.value = existingEntry ? existingEntry.priority : "Low";
+            form.appendChild(priorityInput);
 
-        // Submit button
-        const submitButton = document.createElement("button");
-        submitButton.type = "submit";
-        submitButton.textContent = "Add ToDo";
-        form.appendChild(submitButton);
+            const projectInput = document.createElement("input");
+            projectInput.type = "text";
+            projectInput.placeholder = "Project (Optional)";
+            projectInput.value = existingEntry ? existingEntry.project : null;
+            form.appendChild(projectInput);
 
-        modalContent.appendChild(form);
+            const descriptionInput = document.createElement("textarea");
+            descriptionInput.placeholder = "Description (Optional)";
+            descriptionInput.value = existingEntry ? existingEntry.description : null;
+            form.appendChild(descriptionInput);
 
-        // Handle form submission
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
+            // Submit button
+            const submitButton = document.createElement("button");
+            submitButton.type = "submit";
+            submitButton.textContent = "Add ToDo";
+            form.appendChild(submitButton);
 
-            const newTitle = titleInput.value;
-            const newDueDate = dueDateInput.value;
-            const newPriority = priorityInput.value;
-            const newProject = projectInput.value || null;
-            const newDescription = descriptionInput.value;
+            modalContent.appendChild(form);
 
-            if (newTitle && newDueDate && newPriority) {
-                const newToDo = new ToDoEntry(newTitle, newDueDate, newPriority, newProject, newDescription);
-                updateScreen(newProject); // Update the screen after adding the new ToDo
-            }
+            // Handle form submission
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
 
-            // Clear form and hide modal after submission
-            form.reset();
-            modal.style.display = "none";
-        });
+                const newTitle = titleInput.value;
+                const newDueDate = dueDateInput.value;
+                const newPriority = priorityInput.value;
+                const newProject = projectInput.value || null;
+                const newDescription = descriptionInput.value;
 
-        // Show the modal
-        modal.style.display = "flex";
+                if (newTitle && newDueDate && newPriority && existingEntry === null) {
+                    const newToDo = new ToDoEntry(newTitle, newDueDate, newPriority, newProject, newDescription);
+                    updateScreen(newProject); // Update the screen after adding the new ToDo
+                } else if (existingEntry !== null) {
+                    let index = ToDoEntry.toDos.indexOf(existingEntry);
+                    // Grabing the entry in the list itself in order to change it
+                    ToDoEntry.toDos[index].editEntry({
+                        title: newTitle,
+                        dueDate: newDueDate,
+                        priority: newPriority,
+                        project: newProject || null,
+                        description : newDescription
+                    });
+                    updateScreen(newProject);
+                }
+
+                // Clear form and hide modal after submission
+                form.reset();
+                modal.style.display = "none";
+            });
+
+            // Show the modal
+            modal.style.display = "flex";
     };
 
     const updateScreen = (project = null) => {
@@ -115,6 +131,11 @@ function ScreenController() {
             projectsBar.appendChild(listElement);
             projectButton.addEventListener("click", clickHandlerProjects);
         }
+        // Adding handler for the button
+        function clickHandlerProjects(e) {
+            const selectedProject = e.target.project;
+            updateScreen(selectedProject);
+        }
 
         // Updating current ToDoList
         list.textContent = ""; // Emptying the content so it doesn't append but replace the current ToDos
@@ -122,11 +143,11 @@ function ScreenController() {
         toDos.forEach((entry) => {
 
             let listElement = document.createElement("li");
-            listElement.classList.add("entryListElement")
+            listElement.classList.add("entryListElement");
 
             // Make a button to display the entry so we can edit and delete them with a cleaner look
             let contentButton = document.createElement("button");
-            contentButton.classList.add("contentButton")
+            contentButton.classList.add("contentButton");
 
             let entryContent = document.createElement("div");
 
@@ -134,7 +155,7 @@ function ScreenController() {
             titleParagraph.textContent = entry.title;
             titleParagraph.classList.add("bold");
             let dateParagraph = document.createElement("p");
-            dateParagraph.textContent = `${entry.dueDate.getDate()}-${entry.dueDate.getMonth() + 1}-${entry.dueDate.getFullYear()}`;
+            dateParagraph.textContent = `${entry.dueDate.getDate()}-${entry.dueDate.getMonth()}-${entry.dueDate.getFullYear()}`;
 
 
             entryContent.appendChild(titleParagraph);
@@ -142,7 +163,7 @@ function ScreenController() {
 
             // Only appending description if there is one
             if (entry.description !== "") {
-                let descriptionParagraph =  document.createElement("p");
+                let descriptionParagraph = document.createElement("p");
                 descriptionParagraph.textContent = entry.description;
                 entryContent.appendChild(descriptionParagraph);
             }
@@ -150,26 +171,21 @@ function ScreenController() {
             listElement.appendChild(contentButton);
             list.appendChild(listElement);
 
-            // The div with the boxes
-            let boxes = document.createElement("div");
+            contentButton.entry = entry;
 
-
+            // Append the function to edit the entry to the contentButton
+            contentButton.addEventListener("click", (e) => {
+                createOrEditToDo(contentButton.entry)
+            });
         });
-
-        // Adding handler for the button
-        function clickHandlerProjects(e) {
-            const selectedProject = e.target.project;
-            updateScreen(selectedProject);
-        }
-    };
-
+    }
     // Initial render
     updateScreen();
 
     // Button to create a new entry
     let newButt = document.querySelector(".new-button");
     newButt.onclick = () => {
-        createNewToDo();
+        createOrEditToDo();
     };
 }
 ScreenController();
