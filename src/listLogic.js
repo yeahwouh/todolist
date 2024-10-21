@@ -60,6 +60,10 @@ class ToDoEntry {
             // Change in ToDoEntry.projects
             if (this.project !== project) {
                 ToDoEntry.projects[this.project] = ToDoEntry.projects[this.project].filter((toDo) => toDo !== this);
+                // If project is the last delete the project in projects
+                if (ToDoEntry.projects[this.project].length === 0) {
+                    delete ToDoEntry.projects[this.project];
+                }
                 this.project = project;
                 this.appendToProject(project)
             }

@@ -132,21 +132,14 @@ function ScreenController() {
         // Updating the projects bar
         projectsBar.textContent = ""; // Emptying it so it doesn't append but replace the Projects
         for (let projectTitle in projects) {
-            // Checking for this project to be empty (not containing any tasks)
-            if (projects[projectTitle].length !== 0) {
-                let listElement = document.createElement("li");
-                // Creating a button to switch between projects views
-                let projectButton = document.createElement("button");
-                projectButton.project = projectTitle;
-                projectButton.textContent = projectTitle;
-                listElement.appendChild(projectButton);
-                projectsBar.appendChild(listElement);
-                projectButton.addEventListener("click", clickHandlerProjects);
-            } else {
-                // Deleting from the actual object
-                delete ToDoEntry.projects[projectTitle];
-            }
-
+            let listElement = document.createElement("li");
+            // Creating a button to switch between projects views
+            let projectButton = document.createElement("button");
+            projectButton.project = projectTitle;
+            projectButton.textContent = projectTitle;
+            listElement.appendChild(projectButton);
+            projectsBar.appendChild(listElement);
+            projectButton.addEventListener("click", clickHandlerProjects);
         }
         // Adding handler for the button
         function clickHandlerProjects(e) {
