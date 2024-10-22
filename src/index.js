@@ -90,6 +90,20 @@ function ScreenController() {
             submitButton.textContent = "Add ToDo";
             form.appendChild(submitButton);
 
+            if (existingEntry) {
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.type = "button";
+                deleteButton.addEventListener("click", () => {
+                    existingEntry.deleteEntry();
+                    updateScreen();
+                    // Clear form and hide modal after submission
+                    form.reset();
+                    modal.style.display = "none";
+                })
+                form.appendChild(deleteButton)
+            }
+
             modalContent.appendChild(form);
 
             // Handle form submission
@@ -98,7 +112,7 @@ function ScreenController() {
 
                 const newTitle = titleInput.value;
                 const newDueDate = dueDateInput.value;
-                const newPriority = priorityInput.value;
+                const newPriority = priorityInput.value || "";
                 const newProject = projectInput.value || null;
                 const newDescription = descriptionInput.value;
 

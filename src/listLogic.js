@@ -32,10 +32,11 @@ class ToDoEntry {
     }
 
 
-    deleteEntry(toDoToDelete){
-        ToDoEntry.toDos = ToDoEntry.toDos.filter(toDo => toDo !== toDoToDelete);
+    deleteEntry() {
+        ToDoEntry.toDos = ToDoEntry.toDos.filter(toDo => toDo !== this);
+        ToDoEntry.projects[this.project] = ToDoEntry.projects[this.project].filter((toDo) => toDo !== this);
         // If project is the last delete the project in projects
-        if (ToDoEntry.projects[to.project].length === 0) {
+        if (ToDoEntry.projects[this.project].length === 0) {
             delete ToDoEntry.projects[this.project];
         }
     }
