@@ -90,12 +90,17 @@ function ScreenController() {
             submitButton.textContent = "Add ToDo";
             form.appendChild(submitButton);
 
+            // Delete Button (if existingEntry != null)
             if (existingEntry) {
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
                 deleteButton.type = "button";
+                deleteButton.classList.add("deleteButton")
+                submitButton.textContent = "Change Entry"
                 deleteButton.addEventListener("click", () => {
+
                     existingEntry.deleteEntry();
+
                     updateScreen();
                     // Clear form and hide modal after submission
                     form.reset();
@@ -165,7 +170,6 @@ function ScreenController() {
         list.textContent = ""; // Emptying the content so it doesn't append but replace the current ToDos
         let toDos = projects[project];
         toDos.forEach((entry) => {
-
             let listElement = document.createElement("li");
             listElement.classList.add("entryListElement");
 

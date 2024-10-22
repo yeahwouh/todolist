@@ -37,7 +37,13 @@ class ToDoEntry {
         ToDoEntry.projects[this.project] = ToDoEntry.projects[this.project].filter((toDo) => toDo !== this);
         // If project is the last delete the project in projects
         if (ToDoEntry.projects[this.project].length === 0) {
-            delete ToDoEntry.projects[this.project];
+            if (this.project === null) {
+                alert("Can't delete the last entry of the default project");
+                ToDoEntry.toDos.push(this);
+                ToDoEntry.projects[this.project].push(this);
+            } else {
+                delete ToDoEntry.projects[this.project];
+            }
         }
     }
 

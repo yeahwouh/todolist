@@ -221,3 +221,11 @@ transform: translateY(0);
     font-weight: bold;
 }
 
+.new-todo-form .deleteButton {
+    margin-top: 5px;
+    background-color: #556B2F;
+}
+.new-todo-form .deleteButton:hover {
+    background-color: darkred;
+}
+
