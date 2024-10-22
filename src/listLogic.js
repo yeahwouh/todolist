@@ -32,8 +32,12 @@ class ToDoEntry {
     }
 
 
-    static deleteEntry(toDoToDelete){
+    deleteEntry(toDoToDelete){
         ToDoEntry.toDos = ToDoEntry.toDos.filter(toDo => toDo !== toDoToDelete);
+        // If project is the last delete the project in projects
+        if (ToDoEntry.projects[to.project].length === 0) {
+            delete ToDoEntry.projects[this.project];
+        }
     }
 
     // Updating values if needed (as I plan on making a form for it I will edit all at once)
